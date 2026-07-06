@@ -225,11 +225,11 @@ streamlit run frontend/main.py
 
 # 💡 Future Improvements
 
--WhatsApp notification channel for deadline alerts
--Automatic JD scraping from Naukri/LinkedIn URLs
--Multi-user support with separate encrypted stores
--Vertex AI Agent Engine deployment for zero-infra scaling
--Memory agent that learns preferred company types and salary ranges over time
+- WhatsApp notification channel for deadline alerts
+- Automatic JD scraping from Naukri/LinkedIn URLs
+- Multi-user support with separate encrypted stores
+- Vertex AI Agent Engine deployment for zero-infra scaling
+- Memory agent that learns preferred company types and salary ranges over time
 
 ---
 
