@@ -16,10 +16,7 @@ CareerSarthi is an AI-powered **Multi-Agent Career Assistant** built using **Goo
 ## 🎥 Project Demo
 
 📺 **YouTube Demo:**  
-<YOUR_YOUTUBE_VIDEO_LINK>
-
-🌐 **Live Demo:**  
-<YOUR_DEPLOYMENT_LINK>
+https://youtu.be/GOeW46ksvaw
 
 ---
 
