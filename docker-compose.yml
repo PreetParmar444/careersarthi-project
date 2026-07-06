@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  career-mcp:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - STORAGE_ENCRYPTION_KEY=${STORAGE_ENCRYPTION_KEY}
+      - APP_ENV=development
+      - LOG_LEVEL=DEBUG
+      - DATABASE_PATH=/app/.data/careersarthi.db
+      - AUDIT_LOG_PATH=/app/.data/audit.log
+    volumes:
+      - ./.data:/app/.data
+      - ./.secrets:/app/.secrets:ro
+    command: ["python", "-m", "mcp_server.server", "--http"]

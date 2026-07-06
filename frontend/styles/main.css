@@ -1,0 +1,727 @@
+/* ============================================================
+   CareerSarthi Design System v4  — Complete light-mode fix
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+/* ═══════════════════════════════════════════════════════════
+   1. FORCE LIGHT BASE — kills Streamlit dark-mode bleed
+═══════════════════════════════════════════════════════════ */
+html, body { background: #F0F4F9 !important; color: #0D1B2A !important; }
+
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"],
+section[data-testid="stMain"],
+.main { background: #F0F4F9 !important; }
+
+.block-container {
+    padding-top: 20px !important;
+    padding-bottom: 48px !important;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
+    max-width: 100% !important;
+    background: #F0F4F9 !important;
+}
+
+/* Streamlit's own markdown container — TRANSPARENT so card backgrounds show */
+[data-testid="stMarkdownContainer"],
+[data-testid="stMarkdownContainer"] > div,
+[data-testid="stMarkdownContainer"] > p,
+.stMarkdown,
+.element-container { background: transparent !important; }
+
+/* ── Hide Streamlit chrome ─────────────────────────────── */
+#MainMenu, footer, header { visibility: hidden !important; }
+.stDeployButton,
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"] { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   2. GLOBAL TEXT — only on Streamlit's OWN components,
+      NOT on all divs (that broke inline color:white cards)
+═══════════════════════════════════════════════════════════ */
+[data-testid="stText"],
+[data-testid="stMetricLabel"],
+[data-testid="stMetricValue"],
+[data-testid="stMetricDelta"],
+[data-testid="stCaptionContainer"],
+[data-testid="stHeading"],
+[data-testid="stWidgetLabel"],
+.stMarkdown p,
+.stMarkdown li,
+.stMarkdown h1, .stMarkdown h2, .stMarkdown h3 { color: #0D1B2A !important; }
+
+/* ── 2b. GLOBAL SAFETY NET ─────────────────────────────────
+   Streamlit's dark-theme text color bleeds into any raw
+   <div>/<span> that doesn't get its own rule — this is how
+   empty-state text, calendar labels, or interview-prep
+   headers end up invisible on a light card even though
+   nobody wrote "color:white" anywhere for them.
+   This sets a LOW-PRIORITY dark default on every element.
+   It does NOT use !important, so every !important rule above
+   (sidebar grays, hero white, chat-bubble-user white, badges)
+   and every inline style="color:...", which always wins over
+   a class rule anyway, still override it exactly as before.
+   This only catches elements that currently have no color
+   rule at all. */
+.stApp, .stApp * { color: #0D1B2A; }
+
+/* ═══════════════════════════════════════════════════════════
+   3. SIDEBAR — kept dark deliberately
+═══════════════════════════════════════════════════════════ */
+[data-testid="stSidebar"] {
+    background: #0D1B2A !important;
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+    min-width: 240px !important;
+    max-width: 240px !important;
+}
+[data-testid="stSidebar"] > div:first-child { padding: 20px 14px !important; }
+
+/* Sidebar text */
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] div,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] span,
+[data-testid="stSidebar"] label { color: #94A3B8 !important; }
+
+/* Sidebar nav buttons */
+[data-testid="stSidebar"] .stButton { margin: 1px 0 !important; }
+[data-testid="stSidebar"] .stButton > button {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 10px !important;
+    color: #94A3B8 !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 9px 14px !important;
+    width: 100% !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    box-shadow: none !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    line-height: 1.4 !important;
+    transition: background 0.15s, color 0.15s !important;
+}
+[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(26,115,232,0.16) !important;
+    color: #93C5FD !important;
+    box-shadow: none !important; border: none !important;
+}
+[data-testid="stSidebar"] .stButton > button:focus,
+[data-testid="stSidebar"] .stButton > button:active {
+    box-shadow: none !important; outline: none !important; border: none !important;
+}
+[data-testid="stSidebar"] .element-container { margin-bottom: 0 !important; }
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] > div { gap: 0 !important; }
+[data-testid="stSidebar"] .stToggle label { color: #64748B !important; font-size: 13px !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   4. HERO BANNER — force white on all children
+═══════════════════════════════════════════════════════════ */
+.cs-hero {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1A3356 55%, #1557B0 100%) !important;
+    border-radius: 20px;
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+    color: #FFFFFF !important;
+}
+/* Force ALL descendants of hero to be white */
+.cs-hero,
+.cs-hero *,
+.cs-hero div,
+.cs-hero span,
+.cs-hero p { color: #FFFFFF !important; }
+
+.cs-hero::after {
+    content: '';
+    position: absolute;
+    width: 380px; height: 380px;
+    background: rgba(26,115,232,0.18);
+    border-radius: 50%;
+    top: -120px; right: -80px;
+    pointer-events: none;
+}
+.cs-hero::before {
+    content: '';
+    position: absolute;
+    width: 220px; height: 220px;
+    background: rgba(0,200,150,0.10);
+    border-radius: 50%;
+    bottom: -70px; left: 40%;
+    pointer-events: none;
+}
+.cs-hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    position: relative; z-index: 1;
+    color: #FFFFFF !important;
+}
+.cs-hero-sub {
+    font-size: 14px;
+    opacity: 0.80;
+    line-height: 1.5;
+    position: relative; z-index: 1;
+    color: #FFFFFF !important;
+}
+.cs-hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 40px;
+    padding: 5px 16px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    position: relative; z-index: 1;
+    margin-top: 16px;
+    color: #FFFFFF !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   5. KPI CARDS
+═══════════════════════════════════════════════════════════ */
+.cs-kpi {
+    background: #FFFFFF !important;
+    border-radius: 18px;
+    padding: 22px 20px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 6px 20px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+    min-height: 140px;
+}
+.cs-kpi::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--a, #1A73E8);
+    border-radius: 18px 18px 0 0;
+}
+.cs-kpi-icon { font-size: 24px; display: block; margin-bottom: 12px; line-height: 1; }
+.cs-kpi-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: #0D1B2A !important;
+    line-height: 1; letter-spacing: -1px;
+}
+.cs-kpi-lbl { font-size: 12px; color: #64748B !important; font-weight: 500; margin-top: 5px; }
+.cs-kpi-delta { font-size: 11.5px; font-weight: 600; margin-top: 8px; }
+
+/* ═══════════════════════════════════════════════════════════
+   6. CONTAINER PANELS (pipeline, deadlines, chat)
+      Uses st.container(key=) → .st-key-* class
+═══════════════════════════════════════════════════════════ */
+[class*="st-key-chat_panel"],
+[class*="st-key-pipeline_panel"],
+[class*="st-key-deadlines_panel"] {
+    background: #FFFFFF !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(0,0,0,0.07) !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.04) !important;
+    padding: 22px !important;
+    margin-bottom: 16px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   6b. GENERIC PANEL (Privacy/Settings containers, etc.)
+       Referenced by app.py as st.container(key="privacy_panel")
+       → .st-key-privacy_panel, and raw class="cs-panel"
+═══════════════════════════════════════════════════════════ */
+.cs-panel,
+[class*="st-key-privacy_panel"],
+[class*="st-key-settings_panel"] {
+    background: #FFFFFF !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(0,0,0,0.07) !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.04) !important;
+    padding: 22px !important;
+    margin-bottom: 16px !important;
+    color: #0D1B2A !important;
+}
+.cs-panel * { color: #0D1B2A !important; }
+
+/* ── Chat empty state ──────────────────────────────────── */
+.cs-chat-empty {
+    text-align: center;
+    padding: 40px 20px 28px;
+    color: #64748B !important;
+}
+.cs-chat-empty-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0D1B2A !important;
+    margin-bottom: 6px;
+}
+.cs-chat-empty-sub {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #64748B !important;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+/* ── Chat scroll wrapper ───────────────────────────────── */
+.cs-chat-scroll {
+    max-height: 420px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: 4px;
+    color: #0D1B2A !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   7. SECTION HEADER
+═══════════════════════════════════════════════════════════ */
+.cs-section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px; padding-bottom: 12px;
+    border-bottom: 1.5px solid #EEF2F7;
+}
+.cs-section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px; font-weight: 700; color: #0D1B2A !important;
+}
+.cs-section-count {
+    margin-left: auto; background: #EEF2FF;
+    color: #1A73E8 !important; border-radius: 20px;
+    padding: 2px 10px; font-size: 11px; font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   8. CHAT BUBBLES
+═══════════════════════════════════════════════════════════ */
+.cs-bubble-user {
+    background: #1A73E8 !important;
+    color: #FFFFFF !important;
+    padding: 11px 16px;
+    border-radius: 16px 16px 3px 16px;
+    font-size: 13.5px; line-height: 1.55;
+    box-shadow: 0 2px 8px rgba(26,115,232,0.28);
+    display: inline-block; max-width: 78%;
+}
+.cs-bubble-user * { color: #FFFFFF !important; }
+.cs-bubble-ai {
+    background: #F8FAFD !important;
+    color: #0D1B2A !important;
+    padding: 14px 16px;
+    border-radius: 3px 16px 16px 16px;
+    font-size: 13.5px; line-height: 1.65;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #E8EDF3;
+    display: inline-block; max-width: 84%;
+}
+.cs-bubble-ai * { color: #0D1B2A !important; }
+.cs-agent-tag {
+    display: inline-block;
+    background: #EEF2FF; color: #1A73E8 !important;
+    border-radius: 20px; padding: 2px 10px;
+    font-size: 10.5px; font-weight: 700; margin-bottom: 8px;
+}
+
+/* Tool steps */
+.cs-tool-step {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 13px; border-radius: 9px;
+    font-size: 12.5px; margin: 3px 0;
+    border: 1px solid transparent;
+}
+.cs-tool-step.done { background: #F0FDF9 !important; color: #059669 !important; border-color: rgba(0,200,150,0.15) !important; }
+.cs-tool-step.active { background: #EEF2FF !important; color: #1A73E8 !important; border-color: rgba(26,115,232,0.15) !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   9. APPLICATION CARDS
+═══════════════════════════════════════════════════════════ */
+.cs-card {
+    background: #FFFFFF !important;
+    border-radius: 14px;
+    border: 1px solid #E8EDF3;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.18s, transform 0.18s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.cs-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09); transform: translateY(-1px); }
+.cs-card * { color: #0D1B2A !important; }   /* FORCE dark text inside cards */
+
+/* Status badges */
+.cs-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 10.5px; font-weight: 700; }
+.cs-b-blue   { background: #EEF2FF !important; color: #1A73E8 !important; }
+.cs-b-green  { background: #F0FDF9 !important; color: #059669 !important; }
+.cs-b-red    { background: #FFF1F2 !important; color: #E11D48 !important; }
+.cs-b-yellow { background: #FFFBEB !important; color: #B45309 !important; }
+.cs-b-purple { background: #F5F3FF !important; color: #7C3AED !important; }
+.cs-b-gray   { background: #F1F5F9 !important; color: #64748B !important; }
+
+/* Skill pills */
+.cs-skill-pill { display: inline-flex; align-items: center; gap: 4px; border-radius: 7px; padding: 4px 11px; font-size: 11.5px; font-weight: 500; margin: 3px; }
+.cs-skill-pill.matched { background: #F0FDF9 !important; color: #059669 !important; }
+.cs-skill-pill.missing { background: #FFF1F2 !important; color: #E11D48 !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   10. INPUT FIELDS — force white background + dark text
+═══════════════════════════════════════════════════════════ */
+.stTextInput > div > div > input,
+.stTextArea > div > div > textarea {
+    background: #FFFFFF !important;
+    border: 1.5px solid #E2E8F0 !important;
+    border-radius: 10px !important;
+    color: #0D1B2A !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13.5px !important;
+    box-shadow: none !important;
+}
+.stTextInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus {
+    border-color: #1A73E8 !important;
+    box-shadow: 0 0 0 3px rgba(26,115,232,0.10) !important;
+}
+.stTextInput > div > div > input::placeholder,
+.stTextArea > div > div > textarea::placeholder { color: #94A3B8 !important; }
+[data-baseweb="input"] { background: #FFFFFF !important; }
+[data-baseweb="textarea"] { background: #FFFFFF !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   11. SELECTBOX / MULTISELECT — the full fix (incl dropdown)
+═══════════════════════════════════════════════════════════ */
+/* The closed widget */
+.stSelectbox > div > div,
+.stMultiSelect > div > div {
+    background: #FFFFFF !important;
+    border: 1.5px solid #E2E8F0 !important;
+    border-radius: 10px !important;
+    color: #0D1B2A !important;
+}
+.stSelectbox > div > div > div,
+.stMultiSelect > div > div > div { color: #0D1B2A !important; }
+
+/* The open dropdown menu (baseweb popover) */
+[data-baseweb="popover"],
+[data-baseweb="popover"] > div,
+[data-baseweb="menu"],
+[data-baseweb="menu"] ul,
+ul[role="listbox"],
+[role="listbox"] {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+}
+
+/* Each option in the dropdown */
+[data-baseweb="menu"] li,
+[data-baseweb="option"],
+[role="option"] {
+    background: #FFFFFF !important;
+    color: #334155 !important;
+    font-size: 13.5px !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 10px 14px !important;
+}
+[data-baseweb="menu"] li:hover,
+[data-baseweb="option"]:hover,
+[role="option"]:hover {
+    background: #EEF2FF !important;
+    color: #1A73E8 !important;
+}
+/* Selected option highlight */
+[aria-selected="true"][role="option"],
+[data-baseweb="option"][aria-selected="true"] {
+    background: #EEF2FF !important;
+    color: #1A73E8 !important;
+}
+
+/* Multiselect tag */
+[data-baseweb="tag"] {
+    background: #EEF2FF !important;
+    color: #1A73E8 !important;
+    border-radius: 6px !important;
+    border: none !important;
+}
+[data-baseweb="tag"] span { color: #1A73E8 !important; }
+[data-baseweb="tag"] [role="presentation"] { color: #1A73E8 !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   12. FILE UPLOADER — the full fix
+═══════════════════════════════════════════════════════════ */
+[data-testid="stFileUploader"],
+[data-testid="stFileUploadDropzone"],
+[data-testid="stFileUploader"] section,
+[data-baseweb="file-uploader"] {
+    background: #F8FAFD !important;
+    border: 2px dashed #CBD5E1 !important;
+    border-radius: 14px !important;
+    color: #334155 !important;
+}
+[data-testid="stFileUploader"] small,
+[data-testid="stFileUploader"] span,
+[data-testid="stFileUploader"] p,
+[data-testid="stFileUploader"] div { color: #64748B !important; background: transparent !important; }
+[data-testid="stFileUploader"] svg { fill: #94A3B8 !important; }
+/* The Browse files button inside uploader */
+[data-testid="stFileUploader"] button,
+[data-testid="stFileUploadDropzone"] button {
+    background: #FFFFFF !important;
+    border: 1.5px solid #E2E8F0 !important;
+    color: #334155 !important;
+    border-radius: 8px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+}
+[data-testid="stFileUploader"]:hover,
+[data-testid="stFileUploadDropzone"]:hover {
+    border-color: #1A73E8 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   13. BUTTONS — main area only (sidebar handled above)
+═══════════════════════════════════════════════════════════ */
+.block-container .stButton > button {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13.5px !important;
+    transition: all 0.18s !important;
+    padding: 9px 18px !important;
+    min-height: 40px !important;
+}
+.block-container .stButton > button[kind="primary"] {
+    background: #1A73E8 !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(26,115,232,0.28) !important;
+}
+.block-container .stButton > button[kind="primary"]:hover {
+    background: #1557B0 !important;
+    box-shadow: 0 4px 16px rgba(26,115,232,0.40) !important;
+    transform: translateY(-1px) !important;
+}
+.block-container .stButton > button[kind="secondary"],
+.block-container .stButton > button:not([kind]),
+.block-container .stButton > button[kind="tertiary"] {
+    background: #FFFFFF !important;
+    border: 1.5px solid #E2E8F0 !important;
+    color: #334155 !important;
+    box-shadow: none !important;
+}
+.block-container .stButton > button[kind="secondary"]:hover,
+.block-container .stButton > button:not([kind]):hover,
+.block-container .stButton > button[kind="tertiary"]:hover {
+    border-color: #1A73E8 !important;
+    color: #1A73E8 !important;
+    background: #EEF2FF !important;
+}
+
+/* ── FORM SUBMIT BUTTON (send ➤) — the black button fix ── */
+[data-testid="stForm"] .stButton > button,
+[data-testid="stForm"] button[type="submit"],
+[data-testid="stFormSubmitButton"] > button {
+    background: #1A73E8 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 8px 14px !important;
+    box-shadow: 0 2px 8px rgba(26,115,232,0.30) !important;
+    transition: background 0.18s, box-shadow 0.18s !important;
+}
+[data-testid="stForm"] .stButton > button:hover,
+[data-testid="stFormSubmitButton"] > button:hover {
+    background: #1557B0 !important;
+    box-shadow: 0 4px 14px rgba(26,115,232,0.42) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   14. INTERVIEW PREP dark header — force white text on ALL children
+═══════════════════════════════════════════════════════════ */
+/* Target any element whose inline bg starts with the gradient */
+[style*="background:linear-gradient(135deg,#0D1B2A"],
+[style*="background: linear-gradient(135deg, #0D1B2A"] {
+    color: #FFFFFF !important;
+}
+[style*="background:linear-gradient(135deg,#0D1B2A"] *,
+[style*="background: linear-gradient(135deg, #0D1B2A"] * {
+    color: #FFFFFF !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   15. TABS
+═══════════════════════════════════════════════════════════ */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 3px; background: #F1F5F9 !important;
+    padding: 4px; border-radius: 10px; border: none !important;
+}
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px !important; font-size: 13px !important;
+    color: #64748B !important; border: none !important;
+    padding: 8px 16px !important; font-weight: 500 !important;
+    background: transparent !important;
+}
+.stTabs [aria-selected="true"] {
+    background: #FFFFFF !important; color: #0D1B2A !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important; font-weight: 600 !important;
+}
+.stTabs [data-baseweb="tab-highlight"],
+.stTabs [data-baseweb="tab-border"] { display: none !important; }
+
+/* Tab panels — white bg so content is readable */
+.stTabs [data-baseweb="tab-panel"] { background: transparent !important; padding-top: 12px !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   16. EXPANDER
+═══════════════════════════════════════════════════════════ */
+[data-testid="stExpander"] {
+    border: 1.5px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    overflow: hidden;
+}
+[data-testid="stExpander"] summary {
+    background: #FFFFFF !important;
+    font-size: 13px !important; font-weight: 600 !important;
+    color: #334155 !important; padding: 12px 16px !important;
+}
+[data-testid="stExpander"] summary:hover { background: #F8FAFD !important; }
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] { background: #FAFBFD !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   17. METRIC OVERRIDE
+═══════════════════════════════════════════════════════════ */
+[data-testid="metric-container"] {
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    padding: 18px 20px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+    border: 1px solid rgba(0,0,0,0.05) !important;
+}
+[data-testid="stMetricValue"] { font-family: 'Space Grotesk', sans-serif !important; font-weight: 700 !important; color: #0D1B2A !important; }
+[data-testid="stMetricLabel"] { color: #64748B !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   18. ALERTS
+═══════════════════════════════════════════════════════════ */
+.stSuccess { background: #F0FDF9 !important; border-left: 3px solid #00C896 !important; border-radius: 10px !important; }
+.stInfo    { background: #EEF2FF !important; border-left: 3px solid #1A73E8 !important; border-radius: 10px !important; }
+.stWarning { background: #FFFBEB !important; border-left: 3px solid #F59E0B !important; border-radius: 10px !important; }
+.stSuccess *, .stInfo *, .stWarning * { color: #0D1B2A !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   19. PROGRESS BAR
+═══════════════════════════════════════════════════════════ */
+.stProgress > div > div > div {
+    background: linear-gradient(90deg, #1A73E8, #00C896) !important;
+    border-radius: 10px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   20. SPINNER
+═══════════════════════════════════════════════════════════ */
+.stSpinner > div { border-top-color: #1A73E8 !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   21. PLOTLY — transparent bg
+═══════════════════════════════════════════════════════════ */
+.stPlotlyChart { background: transparent !important; }
+.js-plotly-plot .plotly { background: transparent !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   22. COLUMN GUTTERS
+═══════════════════════════════════════════════════════════ */
+[data-testid="column"] { padding-left: 6px !important; padding-right: 6px !important; }
+[data-testid="stHorizontalBlock"] > div:first-child { padding-left: 0 !important; }
+[data-testid="stHorizontalBlock"] > div:last-child  { padding-right: 0 !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   23. SCROLLBAR
+═══════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #F1F5F9; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* ═══════════════════════════════════════════════════════════
+   24. DEADLINES PAGE specific
+═══════════════════════════════════════════════════════════ */
+.cs-urgency-row { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:12px; margin-bottom:8px; border-left-width:3px; border-left-style:solid; }
+
+/* ═══════════════════════════════════════════════════════════
+   25. TYPOGRAPHY helpers
+═══════════════════════════════════════════════════════════ */
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; color: #0D1B2A !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   26. STREAMLIT BLOCK WRAPPERS — force transparent
+       These are the hidden divs that cause dark rectangles
+═══════════════════════════════════════════════════════════ */
+[data-testid="stVerticalBlock"],
+[data-testid="stVerticalBlockBorderWrapper"],
+[data-testid="stHorizontalBlock"],
+[data-testid="stElementContainer"],
+[data-testid="stFullScreenFrame"],
+div[class^="st-emotion-cache"],
+div[class*="st-emotion-cache"] {
+    background: transparent !important;
+}
+/* But preserve the sidebar dark background */
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"],
+[data-testid="stSidebar"] div[class^="st-emotion-cache"] {
+    background: transparent !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   27. DROPDOWN / SELECT open state — also covers dark bg
+       on multiselect pill delete button
+═══════════════════════════════════════════════════════════ */
+[data-baseweb="popover"] *,
+[data-baseweb="menu"] *,
+[data-baseweb="select"] *,
+ul[role="listbox"] *,
+[role="listbox"] * { background: transparent !important; }
+
+/* Reset specific items that NEED a bg */
+[data-baseweb="menu"] li { background: #FFFFFF !important; }
+[data-baseweb="menu"] li:hover { background: #EEF2FF !important; }
+[role="option"] { background: #FFFFFF !important; }
+[role="option"]:hover { background: #EEF2FF !important; }
+[data-baseweb="tag"] { background: #EEF2FF !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   28. FILE UPLOADER inner wrapper — the dark dropzone box
+═══════════════════════════════════════════════════════════ */
+[data-testid="stFileUploadDropzone"],
+[data-testid="stFileUploadDropzone"] > div,
+[data-testid="stFileUploadDropzone"] section {
+    background: #F8FAFD !important;
+}
+/* "Browse files" button specifically */
+[data-testid="stFileUploadDropzone"] button {
+    background: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
+    color: #334155 !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+}
+/* Uploaded file chip */
+[data-testid="stFileUploaderFile"],
+[data-testid="stFileUploaderFileData"] {
+    background: #F0FDF9 !important;
+    border: 1px solid rgba(0,200,150,0.20) !important;
+    border-radius: 10px !important;
+    color: #0D1B2A !important;
+}
+[data-testid="stFileUploaderFile"] * { color: #334155 !important; }

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "careersarthi"
+version = "0.1.0"
+description = "ADK multi-agent career co-pilot — tracks applications, flags skill gaps, preps interviews."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "google-adk",
+    "google-genai",
+    "mcp",
+    "httpx",
+    "python-dotenv",
+    "cryptography",
+    "typer",
+    "rich",
+    "pypdf",
+    "python-docx",
+    "google-auth-oauthlib",
+    "google-api-python-client",
+]
+
+[project.scripts]
+careersarthi = "cli.main:main"
+
+[tool.setuptools.packages.find]
+include = ["careersarthi*", "mcp_server*", "cli*"]
